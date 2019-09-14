@@ -24,8 +24,8 @@ async function run() {
 
 	// Add git configuration.
 	await exec('git', ['config', '--global', 'credential.helper', 'store']);
-	await exec('git', ['config', '--global', 'url.https://github.com/.insteadOf', 'ssh://git@github.com/']);
-	await exec('git', ['config', '--global', 'url.https://github.com/.insteadOf', 'git@github.com:']);
+	await exec('git', ['config', '--global',          'url.https://github.com/.insteadOf', 'ssh://git@github.com/']);
+	await exec('git', ['config', '--global', '--add', 'url.https://github.com/.insteadOf', 'git@github.com:']);
 }
 
 try {
