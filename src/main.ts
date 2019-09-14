@@ -28,8 +28,6 @@ async function run() {
 	await exec('git', ['config', '--global', '--add', 'url.https://github.com/.insteadOf', 'git@github.com:']);
 }
 
-try {
-	run();
-} catch (error) {
+run().catch(error => {
 	core.setFailed(error.message);
-}
+});
