@@ -1,6 +1,8 @@
 name: setup-git-credentials
-description: Allow cloning of private repositories from GitHub
+description: Allow cloning private repositories
 author: Fusion Engineering
+icon: unlock
+color: orange
 inputs:
   secret:
     description: secret containing the git credentials
