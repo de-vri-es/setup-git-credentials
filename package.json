@@ -1,0 +1,29 @@
+{
+  "name": "setup-git-credentials",
+  "version": "0.0.0",
+  "private": true,
+  "description": "Allow cloning private repositories from GitHub",
+  "main": "lib/main.js",
+  "scripts": {
+    "build": "tsc"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/fusion-engineering/setup-git-credentials.git"
+  },
+  "keywords": [
+    "git",
+    "private",
+    "clone"
+  ],
+  "author": "Fusion Engineering",
+  "license": "BSD-2-Clause",
+  "dependencies": {
+    "@actions/core": "^1.0.0",
+    "@actions/exec": "^1.0.0"
+  },
+  "devDependencies": {
+    "@types/node": "^12.0.4",
+    "typescript": "^3.5.1"
+  }
+}

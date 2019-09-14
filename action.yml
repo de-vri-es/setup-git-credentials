@@ -1,0 +1,11 @@
+name: setup-git-credentials
+description: Allow cloning of private repositories from GitHub
+author: Fusion Engineering
+inputs:
+  secret:
+    description: secret containing the git credentials
+    default: GIT_CREDENTIALS
+
+runs:
+  using: node12
+  main: lib/main.js
