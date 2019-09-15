@@ -12,11 +12,7 @@ function xdg_config_home() {
 }
 
 async function run() {
-	const secret = core.getInput('secret');
-	const credentials = process.env[secret];
-	if (!credentials) {
-		throw new Error(`Credentials environment variable '${secret}' is not set`);
-	}
+	const credentials = core.getInput('credentials', { required: true });
 
 	// Write credentials.
 	await fs.mkdir(`${xdg_config_home()}/git`, { recursive: true });

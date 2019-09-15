@@ -1,12 +1,9 @@
 name: setup-git-credentials
 description: Allow cloning private repositories
 author: Fusion Engineering
-icon: unlock
-color: orange
 inputs:
-  secret:
-    description: secret containing the git credentials
-    default: GIT_CREDENTIALS
+  credentials:
+    description: git credentials use
 
 runs:
   using: node12
