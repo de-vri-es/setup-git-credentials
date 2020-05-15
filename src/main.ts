@@ -6,7 +6,7 @@ import * as process from 'process';
 import * as os from 'os';
 
 function xdg_config_home() {
-	const xdg_config_home = process.env['XGD_CONFIG_HOME'];
+	const xdg_config_home = process.env['XDG_CONFIG_HOME'];
 	if (xdg_config_home) return xdg_config_home;
 	return `${os.homedir()}/.config`
 }
