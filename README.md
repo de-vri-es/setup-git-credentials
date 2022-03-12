@@ -31,7 +31,7 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-    - uses: fusion-engineering/setup-git-credentials@v2
+    - uses: de-vri-es/setup-git-credentials@v2
       with:
         credentials: ${{secrets.GIT_CREDENTIALS}}
     - uses: actions/checkout@v1
