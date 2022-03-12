@@ -1,6 +1,6 @@
 {
   "name": "setup-git-credentials",
-  "version": "2.0.7",
+  "version": "2.0.8",
   "private": true,
   "description": "Allow cloning private repositories",
   "main": "lib/main.js",
