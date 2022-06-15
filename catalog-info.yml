@@ -1,0 +1,12 @@
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
+  name: 'setup-git-credentials'
+  github.com/project-slug: Tradeshift/setup-git-credentials
+  tags:
+    - github-action
+    - nodejs
+spec:
+  type: other
+  lifecycle: production
+  owner: 'developer-productivity'
