@@ -19,7 +19,7 @@
   "author": "Fusion Engineering",
   "license": "BSD-2-Clause",
   "dependencies": {
-    "@actions/core": "^1.2.6",
+    "@actions/core": "^1.9.1",
     "@actions/exec": "^1.0.4"
   },
   "devDependencies": {
