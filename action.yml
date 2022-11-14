@@ -1,12 +1,12 @@
 name: setup-git-credentials
 description: Allow cloning private repositories
-author: Fusion Engineering
+author: Maarten de Vries
 branding:
   icon: lock
   color: orange
 inputs:
   credentials:
-    description: git credentials use
+    description: git credentials to use
 
 runs:
   using: node16
