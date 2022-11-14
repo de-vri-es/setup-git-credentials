@@ -24,14 +24,16 @@ async function run() {
 	// On self-hosted runners, the credentials file could be retained between runs, so we don't want to add duplicates.
 	await fs.mkdir(`${xdg_config_home()}/git`, { recursive: true });
 	const file = await fs.open(`${xdg_config_home()}/git/credentials`, "a+", 0o600);
-	const old_credentials = non_empty_trimmed_lines((await file.readFile()).toString());
+	const contents = (await file.readFile()).toString();
+	const old_credentials = non_empty_trimmed_lines(contents);
 	const new_credentials = credentials.filter(entry => !old_credentials.includes(entry));
 
-	// Replace the entire file, so it doesn't matter if it ended with a newline before.
-	file.truncate(0);
-	for (const credential of old_credentials) {
-		await file.write(credential + "\n");
+	// If the file didn't end with a newline, add one.
+	if (contents.length > 0 && !contents.endsWith("\n")) {
+		file.write("\n");
 	}
+
+	// Add credentials that aren't already in the file.
 	for (const credential of new_credentials) {
 		await file.write(credential + "\n");
 	}

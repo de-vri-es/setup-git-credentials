@@ -1,5 +1,9 @@
 name: "PR Checks"
-on: [pull_request, push]
+on:
+  pull_request:
+    branches: "*"
+  push:
+    branches: ["main"]
 
 jobs:
   check_pr:
@@ -20,3 +24,47 @@ jobs:
         || (echo "##[error] found changed files after build. please 'npm run build && npm run format'" \
                  "and check in all changes" \
             && exit 1)
+  test-new-file:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - run: rm -f ${XDG_CONFIG_HOME:-$HOME/.config}/git/credentials
+      - uses: ./
+        with:
+          credentials: |
+            https://user:password@example.com
+            https://user:password@example.org
+      - run: diff ${XDG_CONFIG_HOME:-$HOME/.config}/git/credentials tests/start-empty.expected
+  test-start-empty:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - run: install -D tests/start-empty.initial ${XDG_CONFIG_HOME:-$HOME/.config}/git/credentials
+      - uses: ./
+        with:
+          credentials: |
+            https://user:password@example.com
+            https://user:password@example.org
+      - run: diff ${XDG_CONFIG_HOME:-$HOME/.config}/git/credentials tests/start-empty.expected
+  test-no-duplicate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - run: install -D tests/no-duplicate.initial ${XDG_CONFIG_HOME:-$HOME/.config}/git/credentials
+      - uses: ./
+        with:
+          credentials: |
+            https://user:password@example.com
+            https://user:password@example.org
+      - run: diff ${XDG_CONFIG_HOME:-$HOME/.config}/git/credentials tests/no-duplicate.expected
+  test-missing-newline:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - run: install -D tests/missing-newline.initial ${XDG_CONFIG_HOME:-$HOME/.config}/git/credentials
+      - uses: ./
+        with:
+          credentials: |
+            https://user:password@example.com
+            https://user:password@example.org
+      - run: diff ${XDG_CONFIG_HOME:-$HOME/.config}/git/credentials tests/missing-newline.expected
