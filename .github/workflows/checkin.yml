@@ -41,7 +41,7 @@ jobs:
           credentials: |
             https://user:password@example.com
             https://user:password@example.org
-      - run: diff ${XDG_CONFIG_HOME:-$HOME/.config}/git/credentials tests/start-empty.expected
+      - run: diff --strip-trailing-cr ${XDG_CONFIG_HOME:-$HOME/.config}/git/credentials tests/start-empty.expected
   test-start-empty:
     runs-on: ubuntu-latest
     steps:
