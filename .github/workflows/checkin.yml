@@ -25,7 +25,13 @@ jobs:
                  "and check in all changes" \
             && exit 1)
   test-new-file:
-    runs-on: ubuntu-latest
+    runs-on: ${{ matrix.os }}
+    defaults:
+      run:
+        shell: bash
+    strategy:
+      matrix:
+        os: [ubuntu-latest, windows-latest]
     steps:
       - uses: actions/checkout@v2
       - run: rm -f ${XDG_CONFIG_HOME:-$HOME/.config}/git/credentials
@@ -34,7 +40,7 @@ jobs:
           credentials: |
             https://user:password@example.com
             https://user:password@example.org
-      - run: diff ${XDG_CONFIG_HOME:-$HOME/.config}/git/credentials tests/start-empty.expected
+      - run: diff --strip-trailing-cr ${XDG_CONFIG_HOME:-$HOME/.config}/git/credentials tests/start-empty.expected
   test-start-empty:
     runs-on: ubuntu-latest
     steps:
