@@ -42,7 +42,13 @@ jobs:
             https://user:password@example.org
       - run: diff --strip-trailing-cr ${XDG_CONFIG_HOME:-$HOME/.config}/git/credentials tests/start-empty.expected
   test-start-empty:
-    runs-on: ubuntu-latest
+    runs-on: ${{ matrix.os }}
+    defaults:
+      run:
+        shell: bash
+    strategy:
+      matrix:
+        os: [ubuntu-latest, windows-latest]
     steps:
       - uses: actions/checkout@v2
       - run: install -D tests/start-empty.initial ${XDG_CONFIG_HOME:-$HOME/.config}/git/credentials
@@ -51,9 +57,15 @@ jobs:
           credentials: |
             https://user:password@example.com
             https://user:password@example.org
-      - run: diff ${XDG_CONFIG_HOME:-$HOME/.config}/git/credentials tests/start-empty.expected
+      - run: diff --strip-trailing-cr ${XDG_CONFIG_HOME:-$HOME/.config}/git/credentials tests/start-empty.expected
   test-no-duplicate:
-    runs-on: ubuntu-latest
+    runs-on: ${{ matrix.os }}
+    defaults:
+      run:
+        shell: bash
+    strategy:
+      matrix:
+        os: [ubuntu-latest, windows-latest]
     steps:
       - uses: actions/checkout@v2
       - run: install -D tests/no-duplicate.initial ${XDG_CONFIG_HOME:-$HOME/.config}/git/credentials
@@ -62,9 +74,15 @@ jobs:
           credentials: |
             https://user:password@example.com
             https://user:password@example.org
-      - run: diff ${XDG_CONFIG_HOME:-$HOME/.config}/git/credentials tests/no-duplicate.expected
+      - run: diff --strip-trailing-cr ${XDG_CONFIG_HOME:-$HOME/.config}/git/credentials tests/no-duplicate.expected
   test-missing-newline:
-    runs-on: ubuntu-latest
+    runs-on: ${{ matrix.os }}
+    defaults:
+      run:
+        shell: bash
+    strategy:
+      matrix:
+        os: [ubuntu-latest, windows-latest]
     steps:
       - uses: actions/checkout@v2
       - run: install -D tests/missing-newline.initial ${XDG_CONFIG_HOME:-$HOME/.config}/git/credentials
@@ -73,4 +91,4 @@ jobs:
           credentials: |
             https://user:password@example.com
             https://user:password@example.org
-      - run: diff ${XDG_CONFIG_HOME:-$HOME/.config}/git/credentials tests/missing-newline.expected
+      - run: diff --strip-trailing-cr ${XDG_CONFIG_HOME:-$HOME/.config}/git/credentials tests/missing-newline.expected
