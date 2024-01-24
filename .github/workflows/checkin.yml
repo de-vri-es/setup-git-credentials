@@ -9,7 +9,7 @@ jobs:
   check_pr:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v1
+    - uses: actions/checkout@v4
 
     - name: "npm ci"
       run: npm ci
@@ -33,7 +33,7 @@ jobs:
       matrix:
         os: [ubuntu-latest, windows-latest]
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v4
       - run: rm -f ${XDG_CONFIG_HOME:-$HOME/.config}/git/credentials
       - uses: ./
         with:
@@ -50,7 +50,7 @@ jobs:
       matrix:
         os: [ubuntu-latest, windows-latest]
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v4
       - run: install -D tests/start-empty.initial ${XDG_CONFIG_HOME:-$HOME/.config}/git/credentials
       - uses: ./
         with:
@@ -67,7 +67,7 @@ jobs:
       matrix:
         os: [ubuntu-latest, windows-latest]
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v4
       - run: install -D tests/no-duplicate.initial ${XDG_CONFIG_HOME:-$HOME/.config}/git/credentials
       - uses: ./
         with:
@@ -84,7 +84,7 @@ jobs:
       matrix:
         os: [ubuntu-latest, windows-latest]
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v4
       - run: install -D tests/missing-newline.initial ${XDG_CONFIG_HOME:-$HOME/.config}/git/credentials
       - uses: ./
         with:
