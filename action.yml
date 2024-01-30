@@ -9,5 +9,5 @@ inputs:
     description: git credentials to use
 
 runs:
-  using: node20
+  using: node16
   main: lib/main.js
