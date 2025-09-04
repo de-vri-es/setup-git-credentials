@@ -11,3 +11,4 @@ inputs:
 runs:
   using: node20
   main: lib/main.js
+  post: lib/post.js

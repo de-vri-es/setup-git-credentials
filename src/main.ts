@@ -30,13 +30,23 @@ async function run() {
 
 	// If the file didn't end with a newline, add one.
 	if (contents.length > 0 && !contents.endsWith("\n")) {
-		file.write("\n");
+		await file.write("\n");
 	}
+
+	// Track the credentials we're adding for cleanup
+	const addedCredentials: string[] = [];
 
 	// Add credentials that aren't already in the file.
 	for (const credential of new_credentials) {
 		await file.write(credential + "\n");
+		addedCredentials.push(credential);
 	}
+
+	// Close the file
+	await file.close();
+
+	// Store the added credentials for post-cleanup
+	core.saveState('added-credentials', JSON.stringify(addedCredentials));
 
 	// Add git configuration.
 	await exec('git', ['config', '--global', 'credential.helper', 'store']);
