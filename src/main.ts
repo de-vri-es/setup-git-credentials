@@ -42,7 +42,8 @@ async function run() {
 		addedCredentials.push(credential);
 	}
 
-	// Close the file
+	// Flush to disk before close - prevents race condition with git
+	await file.sync();
 	await file.close();
 
 	// Store the added credentials for post-cleanup
