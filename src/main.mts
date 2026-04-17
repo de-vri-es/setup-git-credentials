@@ -1,5 +1,5 @@
 import * as core from '@actions/core';
-import { exec } from '@actions/exec';
+import * as exec from '@actions/exec';
 
 import { promises as fs } from 'fs';
 import * as process from 'process';
@@ -24,24 +24,28 @@ async function run() {
 	// On self-hosted runners, the credentials file could be retained between runs, so we don't want to add duplicates.
 	await fs.mkdir(`${xdg_config_home()}/git`, { recursive: true });
 	const file = await fs.open(`${xdg_config_home()}/git/credentials`, "a+", 0o600);
-	const contents = (await file.readFile()).toString();
-	const old_credentials = non_empty_trimmed_lines(contents);
-	const new_credentials = credentials.filter(entry => !old_credentials.includes(entry));
+	try {
+		const contents = (await file.readFile()).toString();
+		const old_credentials = new Set(non_empty_trimmed_lines(contents));
+		const new_credentials = credentials.filter(entry => !old_credentials.has(entry));
 
-	// If the file didn't end with a newline, add one.
-	if (contents.length > 0 && !contents.endsWith("\n")) {
-		file.write("\n");
-	}
+		// If the file didn't end with a newline, add one.
+		if (contents.length > 0 && !contents.endsWith("\n")) {
+			await file.write("\n");
+		}
 
-	// Add credentials that aren't already in the file.
-	for (const credential of new_credentials) {
-		await file.write(credential + "\n");
+		// Add credentials that aren't already in the file.
+		for (const credential of new_credentials) {
+			await file.write(credential + "\n");
+		}
+	} finally {
+		await file.close();
 	}
 
 	// Add git configuration.
-	await exec('git', ['config', '--global', 'credential.helper', 'store']);
-	await exec('git', ['config', '--global', '--replace-all', 'url.https://github.com/.insteadOf', 'ssh://git@github.com/']);
-	await exec('git', ['config', '--global', '--add', 'url.https://github.com/.insteadOf', 'git@github.com:']);
+	await exec.exec('git', ['config', '--global', 'credential.helper', 'store']);
+	await exec.exec('git', ['config', '--global', '--replace-all', 'url.https://github.com/.insteadOf', 'ssh://git@github.com/']);
+	await exec.exec('git', ['config', '--global', '--add', 'url.https://github.com/.insteadOf', 'git@github.com:']);
 }
 
 run().catch(error => {
