@@ -19,6 +19,9 @@ function non_empty_trimmed_lines(input: string): string[] {
 
 async function run() {
 	const credentials = non_empty_trimmed_lines(core.getInput('credentials', { required: true }));
+	for (const credential of credentials) {
+		core.setSecret(credential);
+	}
 
 	// Get the current credentials so we can avoid adding duplicates.
 	// On self-hosted runners, the credentials file could be retained between runs, so we don't want to add duplicates.
@@ -27,6 +30,9 @@ async function run() {
 	try {
 		const contents = (await file.readFile()).toString();
 		const old_credentials = new Set(non_empty_trimmed_lines(contents));
+		for (const credential of old_credentials) {
+			core.setSecret(credential);
+		}
 		const new_credentials = credentials.filter(entry => !old_credentials.has(entry));
 
 		// If the file didn't end with a newline, add one.
