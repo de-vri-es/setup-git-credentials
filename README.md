@@ -57,5 +57,5 @@ If you can use plain SSH keys that may be easier.
 
 # Compatibility with custom runners
 
-The latest version of this action runs on `node20`.
-If your custom runner doesn't support `node20` yet, you can pin the action to `v2.0` which runs on `node16`.
+The latest version of this action runs on `node24`.
+If your custom runner doesn't support `node24` yet, you can pin the action to `v2.1` which runs on `node20`.
